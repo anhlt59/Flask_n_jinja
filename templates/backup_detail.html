@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Detail Auto Script Tools</title>
+    <meta charset="utf-8">
+    <link rel="shortcut icon" type="image/x-icon" href="/static/images/icon.ico" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+    integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+    <style type="text/css">
+    {% include 'css/CRITICAL.css' %}
+    {% include 'css/ok.css' %}
+    {% include 'css/oid.css' %}
+    {% include 'css/WARNING.css' %}
+    {% include 'css/UNKNOWN.css' %}
+    {% include 'css/CONDITION.css' %}
+    {% include 'css/option.css' %}
+    {% include 'css/checkname.css' %}
+
+   {% set slots = ['host','community','hostname','ifindex','throughput','error','discard','speed','perfdata','lastcheck','peer','advlimit','warning','critical','bandwidth'] %}
+   option_ls_C =[]
+   {% for op in option if op in slots %}
+   option_ls_C.push("{{op}}")
+   {% endfor %}
+   document.getElementById("option_lc_S").value = option_ls_C;
+
+    #snmb_div1{
+       background-color:#CCD1D1       ;
+       margin: auto;
+       border: 2px solid #CCD1D1  ;
+       padding: 7px;
+       border-radius: 5px;
+   }
+
+
+   #header{
+     //background-color:#f6f7fb  ;
+     margin: auto;
+     // border: 2px solid #f6f7fb  ;
+     padding: 7px;
+     border-radius: 5px;
+ }
+ .option_table th{
+    background-color:#CCD1D1        ;
+}
+.option_table {
+    border-collapse: CCD1D1;
+}
+
+input[type="text"] {
+    background-color: #FFFFFF;
+    pointer-events: none;
+}
+
+
+</style>
+</head>
+<body style="font-size: 100%;">
+    <div class="container-fluid bg-dark sticky-top" style="height: 50%;">
+        <div class="container bg-dark">
+            <nav class="navbar navbar-expand-md bg-dark navbar-dark" style="height: 50%;">
+                <a class="navbar-brand" href="#"><b>Script Tool</b></a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="collapsibleNavbar">
+                    <ul class="navbar-nav mr-auto">
+                        <li class="nav-item active">
+                            <button class="btn btn-link active text-success"><b>Detail Script</b>
+                            </button>
+                        </li>
+                        <li class="nav-item">
+                            <button class="btn btn-link text-info" onclick="window.location.href='/home'"><b>Home</b>
+                            </button>
+                        </li>
+                        <li class="nav-item">
+                            <button class="btn btn-link text-info" onclick="window.location.href='/add'"><b>Add New
+                            Script</b>
+                        </button>
+                    </li>
+                    <li class="nav-item">
+                        <button class="btn btn-link text-info" onclick="window.location.href='/edit/{{Name}}'"><b>Edit Script</b>
+                        </button>
+                    </li>
+                </ul>
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <b class="text-white" style="font-size: 14px;">{{dt['name']}}</b>
+                        <br>
+                        <i class="text-white" style="font-size: 10px;">{{dt['User']}}</i>
+                    </li>
+                    <li class="nav-item">
+                        <a href=/"sign_out" class="btn text-info  text-info" style="font-size:14px">
+                            <b>Sign Out </b> <i class="fa fa-sign-out"></i></a>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+        </div>
+    </div>
+
+    <div class="container">
+
+        <div id="header" class="container">
+            <table style="margin-top:15px;">
+                <tr>
+                    <td>
+                        <label style="margin-left:16px;">Script Name </label>
+                    </td>
+                    <td>
+                        <label style="margin-left:18px;">{{Name}}</label>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label style="margin-left:16px;">User Name </label>
+                    </td>
+                    <td>
+                        <label style="margin-left:18px;">{{User}}</label>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label style="margin-left:16px;">Time Update </label>
+                    </td>
+                    <td>
+                        <label style="margin-left:18px;">{{Update}}</label>
+                    </td>
+                </tr>
+                <tr>
+                    <td width="20%">
+                        <label style="margin-left:16px;">Description </label>
+                    </td>
+                    <td width="100%">
+                        <input width="100%" type='text' id="Description" value="{{Description}}" class='form-control'
+                        placeholder='Description' style="margin-left:18px;">
+                    </td>
+                </tr>
+            </table>
+
+        </div>
+        <br>
+        {%-for i in detail%}
+         {% autoescape on %}{{i|safe}}<br>{% endautoescape %}
+        {%endfor-%}
+
+                   </tbody>
+               </table>
+           </form>
+       </div>
+   </div>
+   <br>
+        <div style="width: 80%; margin-left: 51%;" class="display-right">
+            <button type="button" style="width: 10%; font-weight: bold;" class="btn btn-info" onclick="window.location.href='/detail/download/{{Name}}'">Download</button>
+            <button type="button" style="width: 10%; font-weight: bold;" class="btn btn-outline-success">Save</button>
+            <button type="button" style="width: 10%; font-weight: bold;" class="btn btn-outline-secondary" onclick="window.location.href='/home'">Cancel</button>
+        </div>
+</div>
+<br>
+<br>
+
+<script>
+   {% set slots = ['host','community','hostname','ifindex','throughput','error','discard','speed','perfdata','lastcheck','peer','advlimit','warning','critical','bandwidth'] %}
+   option_ls_C =[]
+   {% for op in option if op in slots %}
+   option_ls_C.push("{{op}}")
+   {% endfor %}
+   document.getElementById("option_lc_S").value = option_ls_C;
+
+
+function fun_Detail(sc){
+    if (confirm('Do you want to delete script '+sc)) {
+      $.ajax({
+        url: "download/test",
+        type: "get",
+        data: '' ,
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
+        success: function (response) {
+
+         console.log(response);
+        }
+     });
+    }
+  }
+
+function option_hides() {
+
+      let x = document.getElementById("option_div2");
+      if (x.style.display === "none") {
+        x.style.display = "block";
+    } else {
+        x.style.display = "none";
+    }
+}
+function oid_hides() {
+  let x = document.getElementById("oid_div2");
+  if (x.style.display === "none") {
+      x.style.display = "block";
+  } else {
+      x.style.display = "none";
+  }
+}
+function Agruments_hides() {
+  let x = document.getElementById("Agruments_div2");
+  if (x.style.display === "none") {
+    x.style.display = "block";
+} else {
+    x.style.display = "none";
+}
+}
+
+
+function WARNING_hides() {
+  let x = document.getElementById("WARNING_div2");
+  if (x.style.display === "none") {
+    x.style.display = "block";
+} else {
+    x.style.display = "none";
+}
+}
+function UNKNOWN_hides() {
+  let x = document.getElementById("UNKNOWN_div2");
+  if (x.style.display === "none") {
+    x.style.display = "block";
+} else {
+    x.style.display = "none";
+}
+}
+function CRITICAL_hides() {
+  let x = document.getElementById("CRITICAL_div2");
+  if (x.style.display === "none") {
+    x.style.display = "block";
+} else {
+    x.style.display = "none";
+}
+}
+function OK_hides() {
+  let x = document.getElementById("OK_div2");
+  if (x.style.display === "none") {
+    x.style.display = "block";
+} else {
+    x.style.display = "none";
+}
+}
+</script>
+</body>
+
+</html>
+

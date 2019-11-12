@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html >
+<head>
+  <title>Admin Auto Script Tools</title>
+  <meta charset="utf-8">
+  <link rel="shortcut icon" type="image/x-icon" href="/static/images/icon.ico" />
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+  <script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap.min.js"></script>
+  <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+  <link href="https://fonts.googleapis.com/css?family=Markazi+Text|Vollkorn" rel="stylesheet">
+
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+
+  <style>
+  #example_paginate a {
+    padding: 10px;
+    border: 2px solid ;
+    border-radius: 2px;
+  }
+
+  .bt-Event{
+    text-align: right;
+    width: 240px;
+    font-size: 4px;
+  }
+</style>
+</head>
+<body style=" zoom: 90%;">
+  <div class="container-fluid bg-dark sticky-top" >
+    <div class="container bg-dark">
+     <nav class="navbar navbar-expand-md bg-dark navbar-dark" >
+      <a class="navbar-brand" href="#"><b style="font-size: 20px;">Script Tool</b></a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="collapsibleNavbar" style="padding: 6px;">
+       <ul class="navbar-nav mr-auto" >
+        <li class="nav-item active" >
+          <button  class="btn btn-link active text-success" ><b style="font-size: 14px;">Admin</b>
+          </button>
+        </li>
+        <li class="nav-item">
+         <button  class="btn btn-link text-info" onclick="window.location.href='home'"><b style="font-size: 14px;">Home</b>
+         </button>
+       </li>
+     </ul>
+     <ul class="navbar-nav">
+      <li class="nav-item" >
+        <b class="text-white" style="font-size: 14px;">{{dt['name']}}</b>
+        <br>
+        <i class="text-white" style="font-size: 10px;">{{dt['User']}}</i>
+      </li>
+      <li class="nav-item" >
+        <a href="sign_out" class="btn text-info  text-info" style="font-size:14px">
+          <b>Sign Out </b> <i class="fa fa-sign-out"></i></a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+</div>
+</div>
+<div class="container">
+  <br>
+  <form class="container">
+    <table id="example" class="table table-striped table-bordered" style="width:100%">
+      <thead>
+        <tr>
+          <th>User</th>
+          <th>Name</th>
+          <th>Description</th>
+          <th>Update</th>
+          <th>partition</th>
+          <th>Status</th>
+          <th>Event</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for item in all_use %}
+        <TR>
+          <TD>{{item['_id']}}</TD>
+          <TD>{{item['name']}}</TD>
+          <TD>{{item['Description']}}</TD>
+          <TD>{{item['Change']}}</TD>
+          <TD>level{{item['partition']}}</TD>
+          <TD>{{item['Status']}}</TD>
+          <td class="bt-Event">
+            <a type="button" class="btn btn-default" data-toggle="modal" data-target="#Modal_add_user">
+              Add
+            </a>
+            <a type="button" data-toggle="modal" data-target="#Modal_edit_user"
+            class="btn btn-default" onclick="fun_Edit('{{item['_id']}}')" >
+            Detail Edit
+            </a>
+          {% if item['partition'] !="1" %}
+          <a type="button" class="btn btn-default" onclick="fun_Delete('{{item['_id']}}')">
+            Delete
+          </a>
+          {% endif %}
+
+          <a type="button" data-toggle="modal" data-target="#Modal_reset_pass"
+            class="btn btn-default" onclick="fun_reset_pass('{{item['_id']}}')" >
+            Reset password
+            </a>
+
+
+        </td>
+      </TR>
+      {% endfor %}
+    </tbody>
+  </table>
+</form>
+</div>
+<br>
+<br>
+
+<script> var counts = {{ all_use2|safe }};
+</script>
+
+{% include 'admin_file/add_user.html' %}
+{% include 'admin_file/edit_user.html' %}
+{% include 'admin_file/reset_pass_user.html' %}
+<script>
+  $(document).ready(function() {
+    $('#example').DataTable();
+  } );
+</script>
+
+<script type="text/javascript">
+
+  function fun_Delete(sc){
+    if (confirm('Do you want to delete user '+sc)) {
+      var data = JSON.stringify({'user': sc})
+      $.ajax({
+        url: "delete_user",
+        type: "post",
+        data: data ,
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
+        success: function (response) {
+          if(response["result"] == "success"){
+            alert("Delete "+ sc +" success");
+            location.reload();
+          }else{
+            alert("Delete failed , err : "+ response["result"]);
+          }
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+         console.log(textStatus, errorThrown);
+       }
+     });
+    }
+
+  }
+</script>
+</body>
+</html>

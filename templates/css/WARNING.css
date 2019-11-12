@@ -1,0 +1,41 @@
+#WARNING_div1{
+   background-color:#ffffb3  ;
+
+  margin: auto;
+  border: 2px solid #ffffb3  ;
+  padding: 7px;
+  border-radius: 2px;
+}
+.cWARNING_tbid{
+  padding: 7px;
+  border-radius: 2px;
+}
+#WARNING_btadd{
+  margin-left:   26px;
+  margin-bottom:  5px;
+  padding: 4px 47px;
+}
+#WARNING_hind{
+  text-align: right;
+}
+#WARNING_hind button{
+  margin-right:   16px;
+}
+
+.WARNING_cl2{
+  background-color: #FFFFFF;
+  border: 2px solid;
+  border-radius: 2px ;
+  padding: 7px;
+}
+.WARNING_table th{
+  background-color:#ffffb3  ;
+}
+.WARNING_table {
+  border-collapse: collapse;
+}
+
+.WARNING_table td,  .table th {
+  border: 1px solid #ddd;
+  padding: 8px;
+}

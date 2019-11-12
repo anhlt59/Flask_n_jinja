@@ -1,0 +1,23 @@
+#message {
+    /*display:none;*/
+    color: #000;
+    position: relative;
+    height: 10px;
+}
+.valid {
+    color: green;
+}
+
+.valid:before {
+    position: relative;
+    content: "✔ Success! You've done it.";
+}
+.invalid_ck {
+    color: red;
+}
+
+.invalid_ck:before {
+    position: relative;
+
+    content: "✖ The Script Name already exists or is malformed.";
+}

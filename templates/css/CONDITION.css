@@ -1,0 +1,40 @@
+#Agruments_div1{
+     background-color:#CCD1D1        ;
+
+     margin: auto;
+     border: 2px solid #CCD1D1        ;
+     padding: 7px;
+     border-radius: 2px;
+   }
+   .cAgruments_tbid{
+
+    padding: 7px;
+    border-radius: 2px;
+  }
+  #Agruments_btadd{
+    margin-left:   26px;
+    margin-bottom:  5px;
+    padding: 4px 47px;
+  }
+  #Agruments_hind{
+    text-align: right;
+  }
+  #Agruments_hind button{
+    margin-right:   16px;
+  }
+  .Agruments_cl2{
+    background-color: #FFFFFF;
+    border: 2px solid;
+    border-radius: 2px ;
+    padding: 7px;
+  }
+  .Agruments_table th{
+    background-color:#CCD1D1        ;
+  }
+  .Agruments_table {
+    border-collapse: collapse;
+  }
+  .Agruments_table td,  .table th {
+    border: 1px solid #ddd;
+    padding: 8px;
+  }

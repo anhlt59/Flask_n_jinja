@@ -1,0 +1,44 @@
+#CRITICAL_div1{
+   background-color:#FFA693  ;
+
+  margin: auto;
+  border: 2px solid #FFA693  ;
+  padding: 7px;
+  border-radius: 2px;
+}
+.cCRITICAL_tbid{
+
+  padding: 7px;
+  border-radius: 2px;
+}
+#CRITICAL_btadd{
+  margin-left:   26px;
+  margin-bottom:  5px;
+  padding: 4px 47px;
+}
+#CRITICAL_hind{
+  text-align: right;
+}
+#CRITICAL_hind button{
+  margin-right:   16px;
+}
+
+.CRITICAL_cl2{
+  background-color: #FFFFFF;
+  border: 2px solid;
+  border-radius: 2px ;
+  padding: 7px;
+}
+.CRITICAL_table th{
+
+  background-color:#FFA693  ;
+}
+.CRITICAL_table {
+
+  border-collapse: collapse;
+}
+
+.CRITICAL_table td,  .table th {
+  border: 1px solid #ddd;
+  padding: 8px;
+}

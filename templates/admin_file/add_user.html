@@ -1,0 +1,197 @@
+
+<div class="container">
+  <!-- Modal -->
+  <div class="modal fade" id="Modal_add_user" role="dialog">
+    <div class="modal-dialog">
+
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+        <div class="modal-body">
+         <form class="form-horizontal" id="form_add">
+          <div class="form-group row">
+            <label style=" text-align: right" class="control-label col-sm-3" for="User">User:</label>
+            <div class="col-sm-9">
+              <input type="email" class="form-control" id="User" placeholder="mail@fpt.com.vn" onkeyup="onkeyup_User()"  required>
+              <i id="ms_User"></i>
+            </div>
+          </div>
+
+          <div class="form-group row">
+            <label  style=" text-align: right" class="control-label col-sm-3" for="pwd_add">Password:</label>
+            <div class="col-sm-9">          
+              <input type="password" class="form-control" id="pwd_add" placeholder="Enter password" onkeyup="onkeyup_Password()" required>
+              <i id="ms_pwd_add"></i>
+            </div>
+          </div>
+
+          <div class="form-group row">
+            <label  style=" text-align: right" class="control-label col-sm-3" >Confirm:</label>
+            <div class="col-sm-9">          
+              <input type="password" class="form-control" id="con_pwd_add" onkeyup="onkeyup_con_pwd_add()" placeholder="Enter Confirm password" required>
+              <i id="ms_con_pwd_add"></i>
+            </div>
+          </div>
+
+          <div class="form-group row">
+            <label  style=" text-align: right" class="control-label col-sm-3" >Level:</label>
+            <div class="col-sm-9">          
+              <select class="form-control" id="select_add">
+                <option value="2">Level 2</option>
+                <option value="3">Level 3</option>
+                <option value="4">Level 4</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-group row">
+            <label  style=" text-align: right" class="control-label col-sm-3" for="User">Full name:</label>
+            <div class="col-sm-9">
+              <input type="text" class="form-control" id="Name_add" placeholder="Enter full name" required>
+            </div>
+          </div>
+
+          <div class="form-group row">
+            <label  style=" text-align: right" class="control-label col-sm-3" for="User">Phone:</label>
+            <div class="col-sm-9">
+              <input type="text" class="form-control" id="Phone_add" placeholder="Enter Phone Number" required>
+
+            </div>
+          </div>
+
+          <div class="form-group row">
+            <label style=" text-align: right" class="control-label col-sm-3" for="User">Description:</label>
+            <div class="col-sm-9">
+              <textarea class="form-control" rows="4" id="Descri_add"></textarea>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="submit" onclick="Submit()" class="btn btn-default">Submit</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+</div>
+<script type="text/javascript">
+  let acc =[];
+  for (var i = counts.length - 1; i >= 0; i--) {
+    acc.push(counts[i]["_id"]);
+
+}
+
+  function onkeyup_User(){
+    let value = document.getElementById("User").value.toLowerCase();
+    if (/[A-Z0-9a-z._%+-]+@fpt.com.vn$/.test(value)) {
+      if (!acc.find(k => k==value)) {
+        console.log();
+       document.getElementById("User").style.borderColor = "green"
+       document.getElementById("ms_User").innerHTML = "";
+       return "ok"
+     }else{
+      document.getElementById("User").style.borderColor = "red"
+      document.getElementById("ms_User").style.color = "red"
+      document.getElementById("ms_User").innerHTML = "User already exists";
+    }
+
+  }else{
+    document.getElementById("User").style.borderColor = "red"
+    document.getElementById("ms_User").style.color = "red"
+    document.getElementById("ms_User").innerHTML = "Please enter an email address";
+  }  
+
+}
+
+function onkeyup_Password(){
+  let message = "";
+  let value = document.getElementById("pwd_add").value;
+  if (value =="") {
+    message="Please enter Password !"
+  }else if(!/^[A-Za-z][A-Za-z0-9@_.]*$/.test(value)) {
+    message="No special characters !"
+  }else if (/\s/.test(value)) {
+    message="No spase !"
+  }else if(!/[a-zA-Z0-9]{8,}/.test(value)) {
+    message="Least 8 from the mentioned characters  !"
+  }
+
+  if (message != "") {
+    document.getElementById("pwd_add").style.borderColor = "red"
+    document.getElementById("ms_pwd_add").style.color = "red"
+    document.getElementById("ms_pwd_add").innerHTML = message;
+  }else{
+    document.getElementById("pwd_add").style.borderColor = "green"
+    document.getElementById("ms_pwd_add").style.color = "green"
+    document.getElementById("ms_pwd_add").innerHTML = "";
+    return "ok"
+  }
+}
+
+function onkeyup_con_pwd_add(){
+  let pwd_add = document.getElementById("pwd_add").value;
+  let con_pwd_add = document.getElementById("con_pwd_add").value;
+  if (pwd_add != con_pwd_add) {
+    document.getElementById("con_pwd_add").style.borderColor = "red"
+    document.getElementById("ms_con_pwd_add").style.color = "red"
+    document.getElementById("ms_con_pwd_add").innerHTML = "Not match";
+  }else{
+   document.getElementById("con_pwd_add").style.borderColor = "green"
+   document.getElementById("ms_con_pwd_add").innerHTML = "";
+   return "ok"
+ }
+
+}
+
+function check_add(){  
+  var form = $("#form_add")
+  form.addClass('was-validated');
+  if (form[0].checkValidity() === false) {
+    return "fail";
+  }
+  else{
+    if (onkeyup_User() == "ok"
+     && onkeyup_con_pwd_add() == "ok"
+     && onkeyup_Password() == "ok") {
+      return "ok"
+  }
+}
+}
+function Submit(){
+
+ var data = JSON.stringify({'_id'        : $('#User').val(),
+                            "password"   : $('#pwd_add').val(),
+                            "name"       : $('#Name_add').val(),
+                            "partition"  : $('#select_add').val(),
+                            "Phone"      : $('#Phone_add').val(),
+                            "Description": $('#Descri_add').val(),
+                          })
+ if (check_add() == "ok") {
+  $.ajax({
+    url: "adduser",
+    type: "post",
+    data: data ,
+    contentType: "application/json; charset=utf-8",
+    dataType: "json",
+    success: function (response) {
+
+      if(response["result"] == "success"){
+        alert(" success");
+        location.reload();
+      }else{
+        alert("Delete failed , err : "+ response["result"]);
+      }
+    },
+    error: function(jqXHR, textStatus, errorThrown) {
+     console.log(textStatus, errorThrown);
+   }
+ });
+}
+}
+
+</script>

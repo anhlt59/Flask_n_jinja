@@ -1,0 +1,43 @@
+#OK_div1{
+   background-color:#DDFF93  ;
+
+  margin: auto;
+  border: 2px solid #DDFF93  ;
+  padding: 7px;
+  border-radius: 2px;
+}
+.cOK_tbid{
+  padding: 7px;
+  border-radius: 2px;
+}
+#OK_btadd{
+  margin-left:   26px;
+  margin-bottom:  5px;
+  padding: 4px 47px;
+}
+#OK_hind{
+  text-align: right;
+}
+#OK_hind button{
+  margin-right:   16px;
+}
+
+.OK_cl2{
+  background-color: #FFFFFF;
+  border: 2px solid;
+  border-radius: 2px ;
+  padding: 7px;
+}
+.OK_table th{
+
+  background-color:#DDFF93  ;
+}
+.OK_table {
+
+  border-collapse: collapse;
+}
+
+.OK_table td,  .table th {
+  border: 1px solid #ddd;
+  padding: 8px;
+}

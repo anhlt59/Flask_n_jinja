@@ -1,0 +1,68 @@
+#!/usr/bin/python
+# library
+from os import path, system
+import subprocess
+import sys
+import threading
+from jinja2 import Environment, PackageLoader, select_autoescape, FileSystemLoader
+
+sys.path.insert(0, '/home/sccc/auto_scripts/render/templates/modify')
+from modify import *
+
+# class render
+class Render(object):
+    def __init__(self, data_input):
+        # argument for render
+        self.data_input = modify(data_input)
+        self.name = data_input.get('name','UNKNOWN')
+        
+        # check error
+        if len(self.data_input['err']) > 0:
+            raise Exception("Can't render script\n"+str(self.data_input['err']))
+
+        # environment jinja
+        self.path = path.dirname(__file__)
+        self.env = Environment(
+            loader=FileSystemLoader(self.path+'/templates'),
+            autoescape=select_autoescape(['py'])
+        )
+
+    def script(self):
+        # render index
+        template = self.env.get_template('tem_script.py')
+        script = template.render(data_input=self.data_input)
+        with open(self.path + '/templates/index.py', 'w') as file:
+            file.write(script)
+
+        # render script
+        template = self.env.get_template('index.py')
+        script = template.render(data_input=self.data_input)
+        with open(self.path + '/scripts/' + self.name\
+                    + '.py', 'w') as file:
+            file.write(script)
+
+# run script
+def run(name, command):
+    args = ['python2','/home/sccc/auto_scripts/render/scripts/'+name+'.py']
+    args.extend(command.split(' '))
+    with subprocess.Popen(args,stdin=subprocess.PIPE,stdout=subprocess.PIPE\
+                         ,stderr=subprocess.PIPE, timeout=3) as proc:
+        stdout, stderr = proc.communicate()
+    return stdout.decode() if len(stderr) == 0 else stderr.decode()
+
+
+# run script
+def run_2(name, command):
+    def target(name, command):
+        args = ['python2','/home/sccc/auto_scripts/render/scripts/'+name+'.py']
+        args.extend(command.split(' '))
+        with subprocess.Popen(args,stdin=subprocess.PIPE,stdout=subprocess.PIPE\
+                             ,stderr=subprocess.PIPE, timeout=3) as proc:
+            stdout, stderr = proc.communicate()
+        return stdout.decode() if len(stderr) == 0 else stderr.decode()
+
+
+if __name__ == '__main__':
+#    Render(data.data_input()).script()
+    print(run('test','-H 118.69.255.60 -c FPTHCM123'))
+    print(run('test_1',''))

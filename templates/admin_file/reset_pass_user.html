@@ -1,0 +1,122 @@
+<div class="container">
+  <!-- Modal -->
+  <div class="modal fade" id="Modal_reset_pass" role="dialog">
+    <div class="modal-dialog">
+
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+        <div class="modal-body">
+         <form class="form-horizontal" id="form_reset">
+          <div class="form-group row">
+            <label style=" text-align: right" class="control-label col-sm-3" for="User">User:</label>
+            <div class="col-sm-9">
+              <input class="form-control" id="User_reset" style="pointer-events: none">
+            </div>
+          </div>
+
+          <div class="form-group row">
+            <label  style=" text-align: right" class="control-label col-sm-3" for="pwd_reset">Password:</label>
+            <div class="col-sm-9">          
+              <input type="password" class="form-control" id="pwd_reset" placeholder="Enter password" onkeyup="onkeyup_Password_reset()" required>
+              <i id="ms_pwd_reset"></i>
+            </div>
+          </div>
+
+          <div class="form-group row">
+            <label  style=" text-align: right" class="control-label col-sm-3" >Confirm:</label>
+            <div class="col-sm-9">          
+              <input type="password" class="form-control" id="con_pwd_reset" onkeyup="onkeyup_con_pwd_reset()" placeholder="Enter Confirm password" required>
+              <i id="ms_con_pwd_reset"></i>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="submit" onclick="Submit_reset_pass()" class="btn btn-default">Submit</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script type="text/javascript">
+	
+  function fun_reset_pass(id){
+   $('#User_reset').val(id)
+   $('#pwd_reset').val("")
+   $('#con_pwd_reset').val("")
+ }
+
+ function onkeyup_Password_reset(){
+  let message = "";
+  let value = document.getElementById("pwd_reset").value;
+  if (value =="") {
+    message="Please enter Password !"
+  }else if(!/^[A-Za-z][A-Za-z0-9@_.]*$/.test(value)) {
+    message="No special characters !"
+  }else if (/\s/.test(value)) {
+    message="No spase !"
+  }else if(!/[a-zA-Z0-9]{8,}/.test(value)) {
+    message="Least 8 from the mentioned characters  !"
+  }
+
+  if (message != "") {
+    document.getElementById("pwd_reset").style.borderColor = "red"
+    document.getElementById("ms_pwd_reset").style.color = "red"
+    document.getElementById("ms_pwd_reset").innerHTML = message;
+  }else{
+    document.getElementById("pwd_reset").style.borderColor = "green"
+    document.getElementById("ms_pwd_reset").style.color = "green"
+    document.getElementById("ms_pwd_reset").innerHTML = "";
+    return "ok"
+  }
+}
+
+function onkeyup_con_pwd_reset(){
+  let pwd_reset = document.getElementById("pwd_reset").value;
+  let con_pwd_reset = document.getElementById("con_pwd_reset").value;
+  if (pwd_reset != con_pwd_reset) {
+    document.getElementById("con_pwd_reset").style.borderColor = "red"
+    document.getElementById("ms_con_pwd_reset").style.color = "red"
+    document.getElementById("ms_con_pwd_reset").innerHTML = "Not match";
+  }else{
+   document.getElementById("con_pwd_reset").style.borderColor = "green"
+   document.getElementById("ms_con_pwd_reset").innerHTML = "";
+   return "ok"
+ }
+
+}
+
+function Submit_reset_pass(){ 
+  if (onkeyup_Password_reset() == "ok"
+    && onkeyup_con_pwd_reset() == "ok") {  
+    ids= $('#User_reset').val();
+     var data = JSON.stringify({'_id'        : ids,
+                                "password"   : $('#pwd_reset').val()})
+  $.ajax({
+    url: "reset_pass_user",
+    type: "post",
+    data: data ,
+    contentType: "application/json; charset=utf-8",
+    dataType: "json",
+    success: function (response) {
+      if(response["result"] == "success"){
+        alert("update "+ ids +" success");
+        location.reload();
+      }else{
+        alert("Delete failed , err : "+ response["result"]);
+      }
+    },
+    error: function(jqXHR, textStatus, errorThrown) {
+     console.log(textStatus, errorThrown);
+   }
+ });
+
+
+}
+}
+</script>

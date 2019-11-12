@@ -1,0 +1,44 @@
+#UNKNOWN_div1{
+   background-color:#ffbf80  ;
+
+  margin: auto;
+  border: 2px solid #ffbf80  ;
+  padding: 7px;
+  border-radius: 2px;
+}
+.cUNKNOWN_tbid{
+
+  padding: 7px;
+  border-radius: 2px;
+}
+#UNKNOWN_btadd{
+  margin-left:   26px;
+  margin-bottom:  5px;
+  padding: 4px 47px;
+}
+#UNKNOWN_hind{
+  text-align: right;
+}
+#UNKNOWN_hind button{
+  margin-right:   16px;
+}
+
+.UNKNOWN_cl2{
+  background-color: #FFFFFF;
+  border: 2px solid;
+  border-radius: 2px ;
+  padding: 7px;
+}
+.UNKNOWN_table th{
+
+  background-color:#ffbf80  ;
+}
+.UNKNOWN_table {
+
+  border-collapse: collapse;
+}
+
+.UNKNOWN_table td,  .table th {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
