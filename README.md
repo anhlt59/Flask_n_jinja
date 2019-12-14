@@ -1,3 +1,4 @@
 # Flask app
+My first project
 
-Flask and jinja2
+using Flask and jinja2
